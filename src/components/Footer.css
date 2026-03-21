@@ -1,0 +1,168 @@
+/* 🔥 FOOTER MAIN */
+.footer {
+  padding: 80px 40px 30px;
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  color: #e2e8f0;
+}
+
+/* 🔥 CONTAINER */
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 60px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* 🔥 HEADINGS */
+.footer-column h3 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #f1f5f9;
+}
+
+/* 🔥 TEXT */
+.footer-column p {
+  font-size: 14px;
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+/* ADDRESS */
+.address {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #cbd5f5;
+}
+
+/* 🔥 LINKS */
+.footer-column span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+
+  color: #94a3b8;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.footer-column span:hover {
+  color: #38bdf8;
+  transform: translateX(5px);
+}
+
+/* 🔥 BOTTOM */
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  margin-top: 50px;
+  padding-top: 20px;
+  text-align: center;
+}
+
+.footer-bottom p {
+  font-size: 13px;
+  color: #64748b;
+}
+
+/* =========================================================
+   🔥 LARGE SCREEN
+========================================================= */
+@media (min-width: 1400px) {
+
+  .footer {
+    padding: 100px 80px 40px;
+  }
+
+  .footer-container {
+    max-width: 1300px;
+  }
+}
+
+/* =========================================================
+   🔥 LAPTOP
+========================================================= */
+@media (max-width: 1200px) {
+
+  .footer {
+    padding: 70px 30px 25px;
+  }
+
+  .footer-container {
+    gap: 40px;
+  }
+}
+
+/* =========================================================
+   🔥 TABLET
+========================================================= */
+@media (max-width: 992px) {
+
+  .footer-container {
+    grid-template-columns: repeat(2, 1fr); /* 🔥 3 → 2 */
+    gap: 30px;
+  }
+
+  .footer {
+    padding: 60px 25px 25px;
+  }
+}
+
+/* =========================================================
+   🔥 MOBILE (CRITICAL)
+========================================================= */
+@media (max-width: 768px) {
+
+  .footer {
+    padding: 50px 18px 20px;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr; /* 🔥 2 → 1 */
+    text-align: center;
+    gap: 30px;
+  }
+
+  .footer-column span:hover {
+    transform: none; /* cleaner on mobile */
+  }
+
+  .footer-column h3 {
+    font-size: 16px;
+  }
+
+  .footer-column p,
+  .footer-column span {
+    font-size: 13px;
+  }
+
+  .address {
+    font-size: 13px;
+  }
+
+  .footer-bottom {
+    margin-top: 30px;
+  }
+}
+
+/* =========================================================
+   🔥 SMALL MOBILE
+========================================================= */
+@media (max-width: 480px) {
+
+  .footer {
+    padding: 40px 12px 15px;
+  }
+
+  .footer-column h3 {
+    font-size: 15px;
+  }
+
+  .footer-column p,
+  .footer-column span {
+    font-size: 12px;
+  }
+
+  .footer-bottom p {
+    font-size: 12px;
+  }
+}

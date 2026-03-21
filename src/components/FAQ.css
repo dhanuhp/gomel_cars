@@ -1,0 +1,121 @@
+/* =========================================================
+   🌌 FAQ CONTAINER (MATCH TESTIMONIAL BACKGROUND)
+========================================================= */
+.faq-container {
+  padding: 100px 40px;
+  text-align: center;
+
+  background:
+    radial-gradient(circle at top, rgba(59,130,246,0.15), transparent 40%),
+    linear-gradient(to bottom, #020617, #020617);
+
+  color: white;
+}
+
+/* TITLE */
+.faq-container h2 {
+  font-size: 36px;
+  margin-bottom: 40px;
+
+  color: #e2e8f0;
+
+  text-shadow:
+    0 0 10px rgba(59,130,246,0.4);
+}
+
+/* =========================================================
+   📦 GRID
+========================================================= */
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+/* =========================================================
+   🔮 FAQ CARD (GLASS STYLE LIKE TESTIMONIAL)
+========================================================= */
+.faq-item {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+
+  padding: 18px 22px;
+  border-radius: 16px;
+
+  border: 1px solid rgba(255,255,255,0.1);
+
+  cursor: pointer;
+  transition: 0.3s;
+
+  text-align: left;
+}
+
+/* HOVER */
+.faq-item:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.6),
+    0 0 20px rgba(59,130,246,0.2);
+}
+
+/* ACTIVE */
+.faq-item.active {
+  border: 1px solid rgba(59,130,246,0.6);
+  box-shadow:
+    0 0 25px rgba(59,130,246,0.3);
+}
+
+/* =========================================================
+   ❓ QUESTION
+========================================================= */
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-weight: 500;
+  color: #f1f5f9;
+}
+
+/* ARROW */
+.arrow {
+  color: #93c5fd;
+  font-size: 14px;
+}
+
+/* =========================================================
+   📄 ANSWER
+========================================================= */
+.faq-answer {
+  margin-top: 12px;
+
+  color: #94a3b8;
+  font-size: 14px;
+  line-height: 1.6;
+
+  animation: fadeIn 0.3s ease;
+}
+
+/* SMOOTH APPEAR */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   📱 MOBILE
+========================================================= */
+@media (max-width: 768px) {
+  .faq-grid {
+    grid-template-columns: 1fr;
+  }
+}

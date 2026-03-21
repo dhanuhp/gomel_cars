@@ -1,0 +1,236 @@
+/* =========================================================
+   🔥 DISCOVER SECTION (RESPONSIVE)
+========================================================= */
+
+.discover-container {
+  padding: 100px 40px;
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  display: flex;
+  justify-content: center;
+}
+
+/* CARD */
+.discover-card {
+  display: flex;
+  gap: 50px;
+  max-width: 1100px;
+  width: 100%;
+  padding: 40px;
+  border-radius: 25px;
+
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  align-items: center;
+}
+
+/* IMAGE */
+.discover-image img {
+  width: 320px;
+  height: 420px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+/* CONTENT */
+.discover-content {
+  flex: 1;
+  color: white;
+}
+
+.discover-content h2 {
+  font-size: 38px;
+  margin-bottom: 15px;
+  line-height: 1.3;
+}
+
+.discover-content h2 span {
+  color: #a855f7;
+}
+
+/* DESCRIPTION */
+.desc {
+  color: #cbd5e1;
+  margin-bottom: 30px;
+  font-size: 15px;
+}
+
+/* FEATURES */
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-bottom: 35px;
+}
+
+.feature {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.feature span {
+  font-size: 22px;
+}
+
+.feature strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.feature p {
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+/* BUTTON */
+.discover-btn {
+  padding: 12px 28px;
+  border: 2px solid #a855f7;
+  background: transparent;
+  color: #a855f7;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.discover-btn:hover {
+  background: #a855f7;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* =========================================================
+   🔥 LARGE SCREEN
+========================================================= */
+@media (min-width: 1400px) {
+
+  .discover-container {
+    padding: 120px 80px;
+  }
+
+  .discover-content h2 {
+    font-size: 42px;
+  }
+}
+
+/* =========================================================
+   🔥 LAPTOP
+========================================================= */
+@media (max-width: 1200px) {
+
+  .discover-container {
+    padding: 90px 30px;
+  }
+
+  .discover-card {
+    gap: 30px;
+    padding: 35px;
+  }
+
+  .discover-image img {
+    width: 280px;
+    height: 380px;
+  }
+
+  .discover-content h2 {
+    font-size: 32px;
+  }
+}
+
+/* =========================================================
+   🔥 TABLET (KEY CHANGE)
+========================================================= */
+@media (max-width: 992px) {
+
+  .discover-container {
+    padding: 80px 25px;
+  }
+
+  .discover-card {
+    flex-direction: column;   /* 🔥 MAIN FIX */
+    text-align: center;
+    gap: 40px;
+  }
+
+  .discover-image img {
+    width: 260px;
+    height: 340px;
+  }
+
+  .discover-content h2 {
+    font-size: 28px;
+  }
+
+  .feature {
+    justify-content: center;
+    text-align: left;
+  }
+}
+
+/* =========================================================
+   🔥 MOBILE
+========================================================= */
+@media (max-width: 768px) {
+
+  .discover-container {
+    padding: 60px 18px;
+  }
+
+  .discover-card {
+    padding: 25px 20px;
+    gap: 30px;
+  }
+
+  .discover-content h2 {
+    font-size: 24px;
+  }
+
+  .desc {
+    font-size: 14px;
+  }
+
+  .feature span {
+    font-size: 18px;
+  }
+
+  .feature p {
+    font-size: 13px;
+  }
+
+  .discover-image img {
+    width: 100%;       /* 🔥 FULL WIDTH */
+    max-width: 240px;
+    height: auto;
+  }
+
+  .discover-btn {
+    width: 100%;       /* 🔥 FULL WIDTH BUTTON */
+    padding: 12px;
+    font-size: 14px;
+  }
+}
+
+/* =========================================================
+   🔥 SMALL MOBILE
+========================================================= */
+@media (max-width: 480px) {
+
+  .discover-container {
+    padding: 50px 12px;
+  }
+
+  .discover-card {
+    padding: 20px 15px;
+  }
+
+  .discover-content h2 {
+    font-size: 20px;
+  }
+
+  .discover-image img {
+    max-width: 200px;
+  }
+}

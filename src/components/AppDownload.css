@@ -1,0 +1,190 @@
+/* 🔥 WRAPPER */
+.app-wrapper {
+  padding: 100px 20px;
+  display: flex;
+  justify-content: center;
+  background: radial-gradient(circle at top, #0a1f3c, #020617);
+}
+
+/* 🔥 CARD */
+.app-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+
+  padding: 50px;
+  border-radius: 25px;
+
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  box-shadow: 
+    0 20px 60px rgba(0,0,0,0.7),
+    inset 0 0 0 1px rgba(255,255,255,0.02);
+
+  max-width: 1100px;
+  width: 100%;
+
+  transition: 0.4s;
+}
+
+.app-card:hover {
+  transform: translateY(-8px);
+}
+
+/* 🔥 LEFT */
+.app-left {
+  flex: 1;
+  text-align: left;
+}
+
+.app-left h2 {
+  font-size: 36px;
+  color: #e2e8f0;
+  margin-bottom: 10px;
+}
+
+.app-left span {
+  color: #3b82f6;
+}
+
+.app-left p {
+  color: #94a3b8;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+/* 🔥 QR SECTION */
+.qr-section {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.qr {
+  width: 140px;
+  border-radius: 10px;
+  background: white;
+  padding: 5px;
+}
+
+/* 🔥 STORE BUTTONS */
+.store-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.store-buttons img {
+  width: 160px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.store-buttons img:hover {
+  transform: scale(1.08);
+}
+
+/* 🔥 RIGHT IMAGE */
+.app-right img {
+  width: 300px;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+}
+
+/* =========================================================
+   🔥 TABLET RESPONSIVE
+========================================================= */
+@media (max-width: 992px) {
+
+  .app-card {
+    gap: 40px;
+    padding: 40px;
+  }
+
+  .app-left h2 {
+    font-size: 28px;
+  }
+
+  .app-right img {
+    width: 240px;
+  }
+}
+
+/* =========================================================
+   🔥 MOBILE RESPONSIVE
+========================================================= */
+@media (max-width: 768px) {
+
+  .app-wrapper {
+    padding: 60px 15px;
+  }
+
+  .app-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 30px;
+    gap: 30px;
+  }
+
+  .app-left {
+    text-align: center;
+  }
+
+  .app-left h2 {
+    font-size: 24px;
+  }
+
+  .app-left p {
+    font-size: 14px;
+  }
+
+  .qr-section {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .qr {
+    width: 120px;
+  }
+
+  .store-buttons {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .store-buttons img {
+    width: 130px;
+  }
+
+  .app-right img {
+    width: 100%;
+    max-width: 220px;
+  }
+}
+
+/* =========================================================
+   🔥 SMALL MOBILE (EXTRA POLISH)
+========================================================= */
+@media (max-width: 480px) {
+
+  .app-card {
+    padding: 20px;
+  }
+
+  .app-left h2 {
+    font-size: 20px;
+  }
+
+  .store-buttons img {
+    width: 120px;
+  }
+
+  .qr {
+    width: 100px;
+  }
+}

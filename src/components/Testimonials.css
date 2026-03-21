@@ -1,0 +1,91 @@
+/* 🔥 WRAPPER */
+.testi-wrapper {
+  padding: 100px 20px;
+  text-align: center;
+
+  background: radial-gradient(circle at top, #0a1f3c, #020617);
+}
+
+/* TITLE */
+.testi-wrapper h2 {
+  font-size: 38px;
+  color: #e2e8f0;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #94a3b8;
+  margin-bottom: 60px;
+}
+
+/* GRID */
+.testi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* 🔥 CARD */
+.testi-card {
+  border-radius: 20px;
+  padding: 25px;
+
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  box-shadow: 
+    0 10px 40px rgba(0,0,0,0.6),
+    inset 0 0 0 1px rgba(255,255,255,0.02);
+
+  transition: 0.4s;
+
+  text-align: left;
+}
+
+.testi-card:hover {
+  transform: translateY(-10px) scale(1.03);
+
+  box-shadow: 
+    0 20px 60px rgba(0,0,0,0.8),
+    0 0 20px rgba(59,130,246,0.3);
+}
+
+/* TOP */
+.testi-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+/* AVATAR */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  color: white;
+  font-weight: bold;
+}
+
+/* NAME */
+.testi-top h3 {
+  color: #e2e8f0;
+  font-size: 16px;
+}
+
+/* TEXT */
+.review-text {
+  color: #94a3b8;
+  font-size: 14px;
+  line-height: 1.6;
+}

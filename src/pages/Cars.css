@@ -1,0 +1,168 @@
+/* =========================
+   🌌 BACKGROUND (FIXED - MATCH HERO)
+========================= */
+.cars-page {
+  padding: 110px 20px 60px;
+  min-height: 100vh;
+
+  background:
+    radial-gradient(circle at 70% 20%, rgba(59,130,246,0.25), transparent 40%),
+    radial-gradient(circle at 20% 80%, rgba(37,99,235,0.2), transparent 40%),
+    linear-gradient(to bottom, #020617, #020617);
+
+  color: white;
+
+  /* subtle smooth feel */
+  background-attachment: fixed;
+}
+
+/* =========================
+   🎯 HEADER
+========================= */
+.cars-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.cars-header h1 {
+  font-size: 48px;
+  font-weight: 800;
+
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.cars-header p {
+  color: #94a3b8;
+}
+
+/* =========================
+   🔮 FLOATING FILTER PANEL
+========================= */
+.filter-panel {
+  max-width: 950px;
+  margin: 0 auto 50px;
+
+  padding: 30px;
+  border-radius: 25px;
+
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(25px);
+
+  border: 1px solid rgba(255,255,255,0.15);
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.7),
+    inset 0 0 20px rgba(255,255,255,0.05);
+
+  transition: 0.3s;
+}
+
+.filter-panel:hover {
+  transform: translateY(-5px);
+}
+
+/* =========================
+   🔍 INPUTS
+========================= */
+.filter-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.filter-input,
+.filter-select {
+  flex: 1;
+  padding: 14px 16px;
+
+  border-radius: 12px;
+  border: none;
+
+  background: rgba(255,255,255,0.08);
+  color: white;
+
+  outline: none;
+  transition: 0.3s;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+  background: rgba(255,255,255,0.15);
+  box-shadow: 0 0 10px #3b82f6;
+}
+
+/* =========================
+   💰 PRICE
+========================= */
+.price-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+/* =========================
+   🔘 FILTER CHIPS
+========================= */
+.filter-chips {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.chip {
+  padding: 10px 22px;
+  border-radius: 999px;
+
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
+
+  color: white;
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.chip:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+.chip.active {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border: none;
+
+  box-shadow: 0 0 15px rgba(59,130,246,0.7);
+}
+
+/* =========================
+   🚗 GRID
+========================= */
+.cars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 30px;
+
+  max-width: 1300px;
+  margin: auto;
+}
+
+/* =========================
+   ✨ CARD HOVER BOOST
+========================= */
+.cars-grid > * {
+  transition: 0.3s;
+}
+
+.cars-grid > *:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+/* =========================
+   ❌ NO DATA
+========================= */
+.no-data {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #94a3b8;
+}

@@ -1,0 +1,244 @@
+/* =========================================================
+   🔥 MAIN SEARCH BAR (GLASS + PREMIUM)
+========================================================= */
+.airbnb-search {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+
+  padding: 8px;
+  border-radius: 50px;
+
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  box-shadow:
+    0 10px 40px rgba(0,0,0,0.5),
+    0 0 30px rgba(59,130,246,0.15),
+    inset 0 0 10px rgba(255,255,255,0.08);
+
+  transition: all 0.3s ease;
+
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* Hover */
+.airbnb-search:hover {
+  transform: scale(1.02);
+}
+
+/* =========================================================
+   🔹 SEARCH SECTIONS
+========================================================= */
+.search-section {
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 10px 14px;
+  border-radius: 40px;
+
+  cursor: pointer;
+  transition: 0.2s;
+
+  gap: 2px;
+}
+
+.search-section:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* =========================================================
+   🔤 TEXT
+========================================================= */
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #cbd5f5;
+}
+
+.search-section input,
+.datepicker-input {
+  width: 100%;
+  border: none;
+  outline: none;
+
+  font-size: 13px;
+  color: #e2e8f0;
+
+  background: transparent;
+}
+
+/* =========================================================
+   🔥 DIVIDER
+========================================================= */
+.divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255,255,255,0.2);
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   🔴 SEARCH BUTTON
+========================================================= */
+.airbnb-button {
+  height: 40px;
+  width: 40px;
+
+  border: none;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+  color: white;
+
+  cursor: pointer;
+
+  margin-left: 6px;
+  flex-shrink: 0;
+
+  background: #ff385c;
+
+  box-shadow: 0 8px 20px rgba(255,56,92,0.5);
+}
+
+.airbnb-button:hover {
+  transform: scale(1.1);
+}
+
+/* =========================================================
+   📱 TABLET
+========================================================= */
+@media (max-width: 992px) {
+
+  .airbnb-search {
+    max-width: 700px;
+  }
+
+  .search-section {
+    padding: 8px 10px;
+  }
+
+  .label {
+    font-size: 10px;
+  }
+
+  .search-section input {
+    font-size: 12px;
+  }
+
+  .airbnb-button {
+    height: 36px;
+    width: 36px;
+  }
+}
+
+/* =========================================================
+   📱 MOBILE (MAIN FIX)
+========================================================= */
+@media (max-width: 768px) {
+
+  .airbnb-search {
+    flex-direction: column;        /* 🔥 KEY CHANGE */
+    border-radius: 20px;
+    padding: 12px;
+    gap: 10px;
+
+    max-width: 100%;
+  }
+
+  .search-section {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .divider {
+    display: none;                /* 🔥 remove dividers */
+  }
+
+  .airbnb-button {
+    width: 100%;                 /* 🔥 full width button */
+    height: 45px;
+    border-radius: 12px;
+    font-size: 14px;
+  }
+}
+
+/* =========================================================
+   📱 SMALL MOBILE
+========================================================= */
+@media (max-width: 480px) {
+
+  .airbnb-search {
+    padding: 10px;
+  }
+
+  .search-section {
+    padding: 10px;
+  }
+
+  .label {
+    font-size: 10px;
+  }
+
+  .search-section input {
+    font-size: 12px;
+  }
+
+  .airbnb-button {
+    height: 42px;
+  }
+}
+
+/* =========================================================
+   🔥 NAVBAR SMALL VERSION
+========================================================= */
+.airbnb-small {
+  max-width: 480px;
+  padding: 5px;
+  border-radius: 32px;
+}
+
+.airbnb-small .search-section {
+  padding: 6px 10px;
+}
+
+.airbnb-small .label {
+  font-size: 10px;
+}
+
+.airbnb-small input,
+.airbnb-small .datepicker-input {
+  font-size: 12px;
+}
+
+.airbnb-small .divider {
+  height: 20px;
+}
+
+.airbnb-small .airbnb-button {
+  height: 34px;
+  width: 34px;
+}
+
+/* =========================================================
+   🔥 DATEPICKER FIX
+========================================================= */
+.react-datepicker-popper {
+  z-index: 9999 !important;
+}

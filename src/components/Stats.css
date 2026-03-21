@@ -1,0 +1,94 @@
+.stats-container {
+  padding: 120px 40px;
+  background: radial-gradient(circle at top, #0f172a, #020617);
+}
+
+/* HEADER */
+.stats-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.stats-header h2 {
+  font-size: 36px;
+  color: #e2e8f0;
+  margin-bottom: 10px;
+}
+
+.stats-header span {
+  background: linear-gradient(90deg, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.stats-header p {
+  color: #94a3b8;
+  max-width: 600px;
+  margin: auto;
+  font-size: 15px;
+}
+
+/* GRID */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 40px;
+}
+
+/* CARD */
+.stat-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 25px;
+  padding: 40px;
+  text-align: center;
+
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.1);
+
+  transition: all 0.4s ease;
+
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+/* HOVER */
+.stat-card:hover {
+  transform: translateY(-12px) scale(1.05);
+
+  box-shadow: 
+    0 25px 80px rgba(0,0,0,0.6),
+    0 0 25px rgba(168, 85, 247, 0.4);
+}
+
+/* ICON */
+.icon {
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+/* NUMBER */
+.stat-number {
+  font-size: 38px;
+  font-weight: 700;
+  margin-bottom: 10px;
+
+  background: linear-gradient(90deg, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* LABEL */
+.stat-card p {
+  color: #94a3b8;
+  font-size: 15px;
+}
+
+/* FOOTER */
+.stats-footer {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.stats-footer p {
+  color: #94a3b8;
+  font-size: 14px;
+}

@@ -1,0 +1,47 @@
+/* 🔥 CONTAINER */
+.links-container {
+  padding: 80px 40px;
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  text-align: center;
+}
+
+/* 🔥 TITLE */
+.links-container h3 {
+  font-size: 28px;
+  margin-bottom: 50px;
+  color: #e2e8f0;
+}
+
+/* 🔥 GRID (4 COLUMN + RESPONSIVE) */
+.links-grid {
+  display: grid;
+
+  /* 🔥 BEST VERSION */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+  gap: 18px;
+
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* 🔥 LINKS */
+.links-grid span {
+  color: #94a3b8;
+  cursor: pointer;
+
+  padding: 10px 12px;
+  border-radius: 10px;
+
+  text-align: left; /* 🔥 important for clean layout */
+
+  transition: all 0.25s ease;
+}
+
+/* 🔥 HOVER EFFECT */
+.links-grid span:hover {
+  color: #38bdf8;
+  background: rgba(255,255,255,0.05);
+
+  transform: translateX(5px); /* smoother than Y */
+}

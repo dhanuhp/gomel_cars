@@ -1,0 +1,71 @@
+/* 🔥 WRAPPER (MATCH ALL SECTIONS) */
+.contact-wrapper {
+  padding: 100px 20px;
+  text-align: center;
+
+  background: radial-gradient(circle at top, #0a1f3c, #020617);
+}
+
+/* 🔥 TITLE */
+.contact-wrapper h2 {
+  font-size: 38px;
+  color: #e2e8f0;
+  margin-bottom: 60px;
+}
+
+.contact-wrapper span {
+  color: #22d3ee;
+}
+
+/* GRID */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 30px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* 🔥 CARD (GLASS STYLE) */
+.contact-card {
+  padding: 35px;
+  border-radius: 20px;
+
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  box-shadow: 
+    0 10px 40px rgba(0,0,0,0.6),
+    inset 0 0 0 1px rgba(255,255,255,0.02);
+
+  transition: all 0.4s ease;
+}
+
+/* 🔥 HOVER */
+.contact-card:hover {
+  transform: translateY(-10px) scale(1.03);
+
+  box-shadow: 
+    0 20px 60px rgba(0,0,0,0.8),
+    0 0 20px rgba(34,211,238,0.3);
+}
+
+/* ICON */
+.contact-icon {
+  font-size: 40px;
+  margin-bottom: 15px;
+}
+
+/* TEXT */
+.contact-card h3 {
+  color: #e2e8f0;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.contact-card p {
+  color: #94a3b8;
+  font-size: 14px;
+}

@@ -1,0 +1,253 @@
+/* SECTION */
+.why-container {
+  padding: 100px 40px;
+  display: flex;
+  justify-content: center;
+
+  background: radial-gradient(circle at top, #0f172a, #020617);
+}
+
+/* MAIN CARD */
+.why-card {
+  max-width: 1100px;
+  width: 100%;
+  padding: 60px;
+  border-radius: 30px;
+
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(15px);
+
+  border: 1px solid rgba(255,255,255,0.1);
+
+  box-shadow: 0 25px 80px rgba(0,0,0,0.6);
+
+  text-align: center;
+}
+
+/* TITLE */
+.why-card h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+  color: #e2e8f0;
+}
+
+.why-card span {
+  background: linear-gradient(90deg, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* SUBTITLE */
+.subtitle {
+  color: #94a3b8;
+  margin-bottom: 50px;
+}
+
+/* CONTENT */
+.why-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+/* SIDE */
+.why-side {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  flex: 1;
+}
+
+/* ITEM */
+.why-item {
+  text-align: center;
+  transition: 0.3s;
+}
+
+/* ICON */
+.icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+/* TITLE */
+.why-item h4 {
+  color: #f1f5f9;
+  margin-bottom: 5px;
+}
+
+/* TEXT */
+.why-item p {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+/* HOVER */
+.why-item:hover {
+  transform: translateY(-5px);
+}
+
+/* IMAGE */
+.why-image img {
+  width: 280px;
+  border-radius: 20px;
+
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  transition: 0.4s;
+}
+
+.why-image img:hover {
+  transform: scale(1.05);
+}
+
+/* BUTTON */
+.why-btn {
+  margin-top: 50px;
+  padding: 14px 35px;
+  border: none;
+  border-radius: 14px;
+
+  background: linear-gradient(90deg, #ff3b2f, #ff6a5c);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.why-btn:hover {
+  transform: scale(1.08);
+  background: linear-gradient(90deg, #ff6a5c, #ff3b2f);
+}
+
+/* =========================================================
+   🔥 LARGE SCREEN
+========================================================= */
+@media (min-width: 1400px) {
+
+  .why-container {
+    padding: 120px 80px;
+  }
+
+  .why-card h2 {
+    font-size: 42px;
+  }
+}
+
+/* =========================================================
+   🔥 LAPTOP
+========================================================= */
+@media (max-width: 1200px) {
+
+  .why-container {
+    padding: 90px 30px;
+  }
+
+  .why-card {
+    padding: 50px;
+  }
+
+  .why-content {
+    gap: 30px;
+  }
+}
+
+/* =========================================================
+   🔥 TABLET
+========================================================= */
+@media (max-width: 992px) {
+
+  .why-container {
+    padding: 80px 25px;
+  }
+
+  .why-card {
+    padding: 40px;
+  }
+
+  .why-card h2 {
+    font-size: 30px;
+  }
+
+  .why-content {
+    flex-direction: column; /* 🔥 KEY FIX */
+    gap: 40px;
+  }
+
+  .why-image img {
+    width: 240px;
+  }
+}
+
+/* =========================================================
+   🔥 MOBILE (CRITICAL)
+========================================================= */
+@media (max-width: 768px) {
+
+  .why-container {
+    padding: 60px 18px;
+  }
+
+  .why-card {
+    padding: 30px 20px;
+  }
+
+  .why-card h2 {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 30px;
+  }
+
+  .why-content {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .why-side {
+    gap: 25px;
+  }
+
+  .why-item h4 {
+    font-size: 14px;
+  }
+
+  .why-item p {
+    font-size: 13px;
+  }
+
+  .why-image img {
+    width: 200px;
+  }
+
+  .why-btn {
+    width: 100%; /* 🔥 full width button */
+    font-size: 14px;
+    padding: 12px;
+  }
+}
+
+/* =========================================================
+   🔥 SMALL MOBILE
+========================================================= */
+@media (max-width: 480px) {
+
+  .why-container {
+    padding: 50px 12px;
+  }
+
+  .why-card {
+    padding: 25px 15px;
+  }
+
+  .why-card h2 {
+    font-size: 20px;
+  }
+
+  .why-image img {
+    width: 170px;
+  }
+}

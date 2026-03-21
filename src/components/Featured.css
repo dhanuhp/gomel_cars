@@ -1,0 +1,77 @@
+/* =========================================================
+   🌌 FEATURED (MATCH TESTIMONIAL DARK THEME)
+========================================================= */
+.featured {
+  padding: 100px 20px;
+  text-align: center;
+
+  /* SAME background as testimonials */
+  background: radial-gradient(circle at top, #0a1f3c, #020617);
+}
+
+/* TITLE */
+.featured h2 {
+  font-size: 36px;
+  color: #e2e8f0;
+  margin-bottom: 10px;
+
+  position: relative;
+  display: inline-block;
+}
+
+/* decorative lines */
+.featured h2::before,
+.featured h2::after {
+  content: "";
+  width: 40px;
+  height: 2px;
+  background: rgba(59,130,246,0.5);
+
+  position: absolute;
+  top: 50%;
+}
+
+.featured h2::before {
+  left: -60px;
+}
+
+.featured h2::after {
+  right: -60px;
+}
+
+/* SUBTITLE */
+.featured-subtitle {
+  color: #94a3b8;
+  margin-bottom: 50px;
+}
+
+/* =========================================================
+   🧾 LOGOS
+========================================================= */
+.logos {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+/* LOGO STYLE */
+.logos img {
+  height: 45px;
+
+  filter: grayscale(100%);
+  opacity: 0.5;
+
+  transition: all 0.3s ease;
+}
+
+/* HOVER (MATCH TESTIMONIAL GLOW FEEL) */
+.logos img:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+
+  transform: scale(1.1);
+
+  /* subtle glow */
+  filter: drop-shadow(0 0 10px rgba(59,130,246,0.4));
+}

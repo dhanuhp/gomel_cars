@@ -1,0 +1,190 @@
+/* 🔥 WRAPPER (DARK PREMIUM BACKGROUND) */
+.car-exp-wrapper {
+  padding: 100px 20px;
+  text-align: center;
+
+  background: radial-gradient(circle at top, #0a1f3c, #020617);
+}
+
+/* TITLE */
+.car-exp-wrapper h2 {
+  font-size: 38px;
+  margin-bottom: 15px;
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+.subtitle {
+  color: #94a3b8;
+  margin-bottom: 60px;
+}
+
+/* GRID */
+.car-exp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* 🔥 PREMIUM CARD */
+.car-card {
+  border-radius: 20px;
+  overflow: hidden;
+
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  box-shadow: 
+    0 10px 40px rgba(0,0,0,0.6),
+    inset 0 0 0 1px rgba(255,255,255,0.02);
+
+  transition: all 0.4s ease;
+}
+
+.car-card:hover {
+  transform: translateY(-10px) scale(1.03);
+
+  box-shadow: 
+    0 20px 60px rgba(0,0,0,0.8),
+    0 0 20px rgba(59,130,246,0.3);
+}
+
+/* IMAGE */
+.car-card-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.car-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  transition: transform 0.5s ease;
+}
+
+/* 🔥 IMAGE ZOOM */
+.car-card:hover img {
+  transform: scale(1.1);
+}
+
+/* OVERLAY */
+.car-card-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 15px;
+
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.9),
+    rgba(0,0,0,0.3),
+    transparent
+  );
+}
+
+.car-card-overlay h3 {
+  color: #ffffff;
+  font-size: 22px;
+  margin: 0;
+}
+
+/* CONTENT */
+.car-card-content {
+  padding: 22px;
+}
+
+.car-card-content p {
+  color: #94a3b8;
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+
+/* 🔥 PREMIUM BUTTON */
+.car-card-content button {
+  width: 100%;
+  padding: 10px;
+
+  background: linear-gradient(135deg, #0a2540, #1e3a8a);
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  cursor: pointer;
+  font-size: 13px;
+
+  transition: 0.3s;
+}
+
+.car-card-content button:hover {
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
+  box-shadow: 0 0 15px rgba(59,130,246,0.5);
+}
+/* =========================================================
+   🔥 TABLET
+========================================================= */
+@media (max-width: 992px) {
+
+  .car-exp-wrapper {
+    padding: 80px 20px;
+  }
+
+  .car-exp-wrapper h2 {
+    font-size: 30px;
+  }
+
+  .car-exp-grid {
+    gap: 20px;
+  }
+}
+
+/* =========================================================
+   🔥 MOBILE
+========================================================= */
+@media (max-width: 768px) {
+
+  .car-exp-wrapper {
+    padding: 60px 15px;
+  }
+
+  .car-exp-wrapper h2 {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 40px;
+  }
+
+  .car-card-overlay h3 {
+    font-size: 18px;
+  }
+
+  .car-card-content p {
+    font-size: 13px;
+  }
+}
+
+/* =========================================================
+   🔥 SMALL MOBILE
+========================================================= */
+@media (max-width: 480px) {
+
+  .car-exp-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .car-card-content {
+    padding: 15px;
+  }
+
+  .car-card-overlay h3 {
+    font-size: 16px;
+  }
+}
