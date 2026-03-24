@@ -1,23 +1,27 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import cars from "../data/cars";
 
 function CarDetails() {
 
-  const { name } = useParams();
+  const { id } = useParams(); // 🔥 FIX: use id
   const navigate = useNavigate();
 
-  const car = cars.find(
-    (c) => c.name === decodeURIComponent(name)
-  );
+  const [car, setCar] = useState(null);
 
   const [pickupDate, setPickupDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [totalDays, setTotalDays] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  /* Price Calculation */
+  // 🔥 FETCH FROM BACKEND
+  useEffect(() => {
+    fetch(`http://localhost:5000/car/${id}`)
+      .then(res => res.json())
+      .then(data => setCar(data))
+      .catch(err => console.error(err));
+  }, [id]);
 
+  /* Price Calculation */
   useEffect(() => {
 
     if (!pickupDate || !returnDate || !car) {
@@ -44,14 +48,12 @@ function CarDetails() {
 
   }, [pickupDate, returnDate, car]);
 
-  /* Car Not Found */
-
+  /* Loading state */
   if (!car) {
-    return <h2 style={{ textAlign: "center" }}>Car not found</h2>;
+    return <h2 style={{ textAlign: "center" }}>Loading...</h2>;
   }
 
   /* Booking */
-
   const handleBooking = () => {
 
     if (!pickupDate || !returnDate) {
@@ -83,7 +85,7 @@ function CarDetails() {
       </h1>
 
       <img
-        src={car.image}
+        src={car.image || "https://via.placeholder.com/800x400"}
         alt={car.name}
         style={{
           width: "100%",
@@ -92,94 +94,47 @@ function CarDetails() {
         }}
       />
 
-      <p style={{ fontSize: "18px", marginBottom: "10px" }}>
-        Type: {car.type}
-      </p>
+      <p>Type: {car.type}</p>
+      <p>Seats: {car.seats || "N/A"}</p>
+      <p>Fuel: {car.fuel || "N/A"}</p>
+      <p>Transmission: {car.transmission || "N/A"}</p>
 
-      <p style={{ fontSize: "18px", marginBottom: "10px" }}>
-        Seats: {car.seats}
-      </p>
-
-      <p style={{ fontSize: "18px", marginBottom: "10px" }}>
-        Fuel: {car.fuel}
-      </p>
-
-      <p style={{ fontSize: "18px", marginBottom: "10px" }}>
-        Transmission: {car.transmission}
-      </p>
-
-      <p style={{ fontSize: "18px", marginBottom: "25px" }}>
+      <p style={{ marginBottom: "25px" }}>
         Price: ₹{car.price} / day
       </p>
 
-      {/* Date Selection */}
-
-      <div
-        style={{
-          display: "flex",
-          gap: "15px",
-          flexWrap: "wrap",
-          alignItems: "center"
-        }}
-      >
+      {/* DATE INPUTS */}
+      <div style={{ display: "flex", gap: "15px", flexWrap: "wrap" }}>
 
         <input
           type="date"
           value={pickupDate}
           onChange={(e) => setPickupDate(e.target.value)}
-          style={{
-            padding: "10px",
-            borderRadius: "6px",
-            border: "1px solid #ccc"
-          }}
         />
 
         <input
           type="date"
           value={returnDate}
           onChange={(e) => setReturnDate(e.target.value)}
-          style={{
-            padding: "10px",
-            borderRadius: "6px",
-            border: "1px solid #ccc"
-          }}
         />
 
         <button
           onClick={handleBooking}
           disabled={totalDays <= 0}
-          style={{
-            padding: "10px 25px",
-            backgroundColor: totalDays > 0 ? "#0a2540" : "#aaa",
-            color: "white",
-            border: "none",
-            borderRadius: "6px",
-            cursor: totalDays > 0 ? "pointer" : "not-allowed"
-          }}
         >
           Book This Car
         </button>
 
       </div>
 
-      {/* Trip Summary */}
-
+      {/* SUMMARY */}
       {totalDays > 0 && (
-
         <div style={{ marginTop: "30px" }}>
-
           <h3>Trip Summary</h3>
-
           <p>Total Days: {totalDays}</p>
-
-          <p>
-            ₹{car.price} × {totalDays} days
-          </p>
-
+          <p>₹{car.price} × {totalDays}</p>
           <h2>Total Price: ₹{totalPrice}</h2>
-
         </div>
-
       )}
 
     </div>

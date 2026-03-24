@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import CarCard from "../components/CarCard";
 import SkeletonCard from "../components/SkeletonCard";
-import cars from "../data/cars";
 import "./Cars.css";
 
 function Cars() {
@@ -14,16 +13,26 @@ function Cars() {
   const pickup = params.get("pickup");
   const returnDate = params.get("return");
 
+  const [cars, setCars] = useState([]); // 🔥 API DATA
   const [filter, setFilter] = useState("All");
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("default");
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(5000);
+  const [maxPrice, setMaxPrice] = useState(10000000);
   const [loading, setLoading] = useState(true);
 
+  // 🔥 FETCH FROM BACKEND
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 800);
-    return () => clearTimeout(timer);
+    fetch("http://localhost:5000/cars")
+      .then(res => res.json())
+      .then(data => {
+        setCars(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Fetch error:", err);
+        setLoading(false);
+      });
   }, []);
 
   /* ✅ Availability Check */
@@ -46,7 +55,7 @@ function Cars() {
     .filter((car) => (location ? car.location === location : true))
     .filter((car) => (filter === "All" ? true : car.type === filter))
     .filter((car) =>
-      car.name.toLowerCase().includes(search.toLowerCase())
+      car.name?.toLowerCase().includes(search.toLowerCase())
     )
     .filter((car) => car.price >= minPrice && car.price <= maxPrice);
 
@@ -58,7 +67,7 @@ function Cars() {
     filteredCars.sort((a, b) => b.price - a.price);
   }
   if (sortBy === "rating") {
-    filteredCars.sort((a, b) => b.rating - a.rating);
+    filteredCars.sort((a, b) => (b.rating || 0) - (a.rating || 0));
   }
 
   return (
@@ -145,7 +154,7 @@ function Cars() {
             ) : (
               filteredCars.map((car) => (
                 <CarCard
-                  key={car.id}
+                  key={car._id} // 🔥 IMPORTANT FIX
                   {...car}
                   available={isCarAvailable(car)}
                 />

@@ -11,11 +11,9 @@ import LocationsPage from "./pages/LocationsPage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import BookingSuccess from "./pages/BookingSuccess";
-
-/* ✅ NEW PAGE */
 import HowItWorksPage from "./pages/HowItWorksPage";
 
-/* 🔥 SCROLL FIX */
+/* 🔥 Scroll to top on route change */
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -29,28 +27,32 @@ function ScrollToTop() {
 function App() {
   return (
     <Router>
-
+      {/* ✅ Scroll Fix */}
       <ScrollToTop />
 
+      {/* ✅ Navbar */}
       <Navbar />
 
+      {/* ✅ Main Content */}
       <main style={{ minHeight: "80vh" }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/cars" element={<Cars />} />
-          <Route path="/car/:name" element={<CarDetails />} />
+
+          {/* 🔥 Better: use ID instead of name (important for backend) */}
+          <Route path="/car/:id" element={<CarDetails />} />
+
           <Route path="/locations" element={<LocationsPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/booking-success/:name" element={<BookingSuccess />} />
 
-          {/* 🔥 IMPORTANT FIX */}
+          <Route path="/booking-success/:name" element={<BookingSuccess />} />
           <Route path="/how-it-works" element={<HowItWorksPage />} />
         </Routes>
       </main>
 
+      {/* ✅ Footer */}
       <Footer />
-
     </Router>
   );
 }
