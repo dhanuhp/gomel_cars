@@ -5,7 +5,6 @@ import SkeletonCard from "../components/SkeletonCard";
 import "./Cars.css";
 
 function Cars() {
-
   const locationData = useLocation();
   const params = new URLSearchParams(locationData.search);
 
@@ -13,7 +12,7 @@ function Cars() {
   const pickup = params.get("pickup");
   const returnDate = params.get("return");
 
-  const [cars, setCars] = useState([]); // 🔥 API DATA
+  const [cars, setCars] = useState([]);
   const [filter, setFilter] = useState("All");
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("default");
@@ -21,21 +20,21 @@ function Cars() {
   const [maxPrice, setMaxPrice] = useState(10000000);
   const [loading, setLoading] = useState(true);
 
-  // 🔥 FETCH FROM BACKEND
+  // 🔥 FETCH DATA
   useEffect(() => {
     fetch("http://localhost:5000/cars")
-      .then(res => res.json())
-      .then(data => {
-        setCars(data);
+      .then((res) => res.json())
+      .then((data) => {
+        setCars(data.data); // ✅ FIX
         setLoading(false);
       })
-      .catch(err => {
-        console.error("Fetch error:", err);
+      .catch((err) => {
+        console.error(err);
         setLoading(false);
       });
   }, []);
 
-  /* ✅ Availability Check */
+  // ✅ Availability
   const isCarAvailable = (car) => {
     if (!pickup || !returnDate) return true;
 
@@ -50,7 +49,7 @@ function Cars() {
     });
   };
 
-  /* ✅ Filtering */
+  // ✅ Filtering
   let filteredCars = cars
     .filter((car) => (location ? car.location === location : true))
     .filter((car) => (filter === "All" ? true : car.type === filter))
@@ -59,7 +58,7 @@ function Cars() {
     )
     .filter((car) => car.price >= minPrice && car.price <= maxPrice);
 
-  /* ✅ Sorting */
+  // ✅ Sorting
   if (sortBy === "priceLow") {
     filteredCars.sort((a, b) => a.price - b.price);
   }
@@ -72,97 +71,21 @@ function Cars() {
 
   return (
     <div className="cars-page">
+      <h1>{location ? `Cars in ${location}` : "Available Cars"}</h1>
 
-      {/* HEADER */}
-      <div className="cars-header">
-        <h1>
-          {location ? `Cars in ${location}` : "Available Cars"}
-        </h1>
-
-        {pickup && returnDate && (
-          <p>{pickup} → {returnDate}</p>
-        )}
-      </div>
-
-      {/* FILTER PANEL */}
-      <div className="filter-panel">
-
-        {/* SEARCH + SORT */}
-        <div className="filter-row">
-          <input
-            className="filter-input"
-            placeholder="Search car name..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-
-          <select
-            className="filter-select"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-          >
-            <option value="default">Sort</option>
-            <option value="priceLow">Price ↑</option>
-            <option value="priceHigh">Price ↓</option>
-            <option value="rating">Top Rated</option>
-          </select>
-        </div>
-
-        {/* PRICE */}
-        <div className="price-row">
-          <input
-            className="filter-input"
-            type="number"
-            placeholder="Min Price"
-            value={minPrice}
-            onChange={(e) => setMinPrice(Number(e.target.value))}
-          />
-
-          <input
-            className="filter-input"
-            type="number"
-            placeholder="Max Price"
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(Number(e.target.value))}
-          />
-        </div>
-
-        {/* FILTER CHIPS */}
-        <div className="filter-chips">
-          {["All", "SUV", "Sedan", "Hatchback"].map((type) => (
-            <button
-              key={type}
-              className={`chip ${filter === type ? "active" : ""}`}
-              onClick={() => setFilter(type)}
-            >
-              {type}
-            </button>
-          ))}
-        </div>
-
-      </div>
-
-      {/* GRID */}
       <div className="cars-grid">
-
         {loading
           ? Array.from({ length: 6 }).map((_, i) => (
               <SkeletonCard key={i} />
             ))
-          : filteredCars.length === 0 ? (
-              <h3 className="no-data">No cars found</h3>
-            ) : (
-              filteredCars.map((car) => (
-                <CarCard
-                  key={car._id} // 🔥 IMPORTANT FIX
-                  {...car}
-                  available={isCarAvailable(car)}
-                />
-              ))
-            )}
-
+          : filteredCars.map((car) => (
+              <CarCard
+                key={car._id}
+                {...car}
+                available={isCarAvailable(car)}
+              />
+            ))}
       </div>
-
     </div>
   );
 }

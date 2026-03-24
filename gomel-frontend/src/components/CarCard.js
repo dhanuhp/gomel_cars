@@ -1,7 +1,8 @@
 import "./CarCard.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function CarCard({
+  _id, // 🔥 VERY IMPORTANT
   name,
   price,
   image,
@@ -11,22 +12,28 @@ function CarCard({
   rating,
   available
 }) {
-  return (
-    <div className="car-card">
+  const navigate = useNavigate();
 
-      {/* Image with fallback */}
+  const handleClick = () => {
+    navigate(`/car/${_id}`); // ✅ FIXED
+  };
+
+  return (
+    <div
+      className="car-card"
+      onClick={handleClick}
+      style={{ cursor: "pointer" }}
+    >
+
+      {/* Image */}
       <div className="image-wrapper">
         <img
-          src={image}
+          src={image || "https://images.pexels.com/photos/358070/pexels-photo-358070.jpeg"}
           alt={name}
           className="car-image"
-          onError={(e) => {
-            e.target.src =
-              "https://images.pexels.com/photos/358070/pexels-photo-358070.jpeg";
-          }}
         />
 
-        {/* ⭐ rating badge */}
+        {/* ⭐ Rating */}
         <div className="rating-badge">
           ⭐ {rating ?? "N/A"}
         </div>
@@ -52,11 +59,15 @@ function CarCard({
 
       {/* Button */}
       {available ? (
-        <Link to={`/car/${name}`} className="link">
-          <button className="car-button primary">
-            Book Now →
-          </button>
-        </Link>
+        <button
+          className="car-button primary"
+          onClick={(e) => {
+            e.stopPropagation(); // 🔥 prevents double click issue
+            navigate(`/car/${_id}`);
+          }}
+        >
+          Book Now →
+        </button>
       ) : (
         <button className="car-button disabled" disabled>
           Not Available

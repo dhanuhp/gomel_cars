@@ -13,7 +13,6 @@ import Signup from "./pages/Signup";
 import BookingSuccess from "./pages/BookingSuccess";
 import HowItWorksPage from "./pages/HowItWorksPage";
 
-/* 🔥 Scroll to top on route change */
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -27,19 +26,15 @@ function ScrollToTop() {
 function App() {
   return (
     <Router>
-      {/* ✅ Scroll Fix */}
       <ScrollToTop />
 
-      {/* ✅ Navbar */}
       <Navbar />
 
-      {/* ✅ Main Content */}
       <main style={{ minHeight: "80vh" }}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/cars" element={<Cars />} />
+          <Route path="/cars" element={<Cars />} /> {/* 🔥 This is key */}
 
-          {/* 🔥 Better: use ID instead of name (important for backend) */}
           <Route path="/car/:id" element={<CarDetails />} />
 
           <Route path="/locations" element={<LocationsPage />} />
@@ -51,7 +46,6 @@ function App() {
         </Routes>
       </main>
 
-      {/* ✅ Footer */}
       <Footer />
     </Router>
   );

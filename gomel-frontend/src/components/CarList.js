@@ -1,14 +1,21 @@
+import { useEffect, useState } from "react";
 import CarCard from "./CarCard";
-import cars from "../data/cars";
 
 function CarList() {
+  const [cars, setCars] = useState([]);
 
-  const featuredCars = cars.slice(0, 3);
+  useEffect(() => {
+    fetch("http://localhost:5000/cars")
+      .then((res) => res.json())
+      .then((data) => {
+        setCars(data.data); // 🔥 important
+      })
+      .catch((err) => console.error("Error fetching cars:", err));
+  }, []);
 
   return (
     <div style={{ padding: "40px" }}>
-
-      <h2 style={{ textAlign: "center" }}>Available Cars</h2>
+      <h2 style={{ textAlign: "center" }}>Available Cars 🚗</h2>
 
       <div
         style={{
@@ -18,23 +25,22 @@ function CarList() {
           marginTop: "30px",
           maxWidth: "1100px",
           marginLeft: "auto",
-          marginRight: "auto"
+          marginRight: "auto",
         }}
       >
-        {featuredCars.map((car) => (
+        {cars.map((car) => (
           <CarCard
-            key={car.id}
+            key={car._id} // 🔥 MongoDB uses _id
             name={car.name}
             price={car.price}
-            image={car.image}
-            seats={car.seats}
-            fuel={car.fuel}
-            transmission={car.transmission}
-            rating={car.rating}
+            image={"https://via.placeholder.com/300"} // temporary image
+            seats={4}
+            fuel={"Petrol"}
+            transmission={"Manual"}
+            rating={4.5}
           />
         ))}
       </div>
-
     </div>
   );
 }
