@@ -27,6 +27,14 @@ function CarDetails() {
       });
   }, [id]);
 
+  // 🔥 FORMAT DATE (IMPORTANT)
+  const formatDate = (date) => {
+    return new Date(date).toISOString().split("T")[0];
+  };
+
+  // 🔥 BOOKED DATES (STRING FORMAT)
+  const bookedDates = (car?.bookedDates || []).map(formatDate);
+
   // 🔥 PRICE CALCULATION
   useEffect(() => {
     if (!pickupDate || !returnDate || !car) {
@@ -52,7 +60,7 @@ function CarDetails() {
     setTotalPrice(days * car.price);
   }, [pickupDate, returnDate, car]);
 
-  // 🔥 BOOKING FUNCTION (UPGRADED)
+  // 🔥 BOOKING FUNCTION
   const handleBooking = async () => {
     if (!pickupDate || !returnDate) {
       alert("Please select dates");
@@ -65,11 +73,8 @@ function CarDetails() {
     }
 
     // 🔥 FRONTEND CONFLICT CHECK
-    const bookedDates = car.bookedDates || [];
-
     const conflict = bookedDates.some((date) => {
-      const d = new Date(date);
-      return d >= new Date(pickupDate) && d <= new Date(returnDate);
+      return date >= pickupDate && date <= returnDate;
     });
 
     if (conflict) {
@@ -99,7 +104,6 @@ function CarDetails() {
         return;
       }
 
-      // ✅ SUCCESS
       navigate(
         `/booking-success/${encodeURIComponent(car.name)}?pickup=${pickupDate}&return=${returnDate}`
       );
@@ -119,7 +123,7 @@ function CarDetails() {
     return <h2 style={{ textAlign: "center" }}>Car not found</h2>;
   }
 
-  // 🔥 TODAY DATE (disable past)
+  // 🔥 TODAY DATE
   const today = new Date().toISOString().split("T")[0];
 
   return (
@@ -159,18 +163,37 @@ function CarDetails() {
 
       {/* DATE INPUT */}
       <div style={{ display: "flex", gap: "15px", flexWrap: "wrap" }}>
+        
         <input
           type="date"
-          min={today} // 🔥 no past dates
+          min={today}
           value={pickupDate}
-          onChange={(e) => setPickupDate(e.target.value)}
+          onChange={(e) => {
+            const selected = e.target.value;
+
+            if (bookedDates.includes(selected)) {
+              alert("This date is already booked ❌");
+              return;
+            }
+
+            setPickupDate(selected);
+          }}
         />
 
         <input
           type="date"
-          min={pickupDate || today} // 🔥 return after pickup
+          min={pickupDate || today}
           value={returnDate}
-          onChange={(e) => setReturnDate(e.target.value)}
+          onChange={(e) => {
+            const selected = e.target.value;
+
+            if (bookedDates.includes(selected)) {
+              alert("This date is already booked ❌");
+              return;
+            }
+
+            setReturnDate(selected);
+          }}
         />
 
         <button onClick={handleBooking} disabled={totalDays <= 0}>
