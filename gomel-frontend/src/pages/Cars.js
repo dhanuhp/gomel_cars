@@ -20,21 +20,21 @@ function Cars() {
   const [maxPrice, setMaxPrice] = useState(10000000);
   const [loading, setLoading] = useState(true);
 
-  // 🔥 FETCH DATA
+  // 🔥 FETCH FROM LIVE BACKEND (FIXED)
   useEffect(() => {
-    fetch("http://localhost:5000/cars")
+    fetch("https://gomel-cars.onrender.com/cars")
       .then((res) => res.json())
       .then((data) => {
-        setCars(data.data); // ✅ FIX
+        setCars(data.data || []); // ✅ safe fallback
         setLoading(false);
       })
       .catch((err) => {
-        console.error(err);
+        console.error("Fetch error:", err);
         setLoading(false);
       });
   }, []);
 
-  // ✅ Availability
+  // ✅ Availability Check
   const isCarAvailable = (car) => {
     if (!pickup || !returnDate) return true;
 
@@ -71,21 +71,31 @@ function Cars() {
 
   return (
     <div className="cars-page">
-      <h1>{location ? `Cars in ${location}` : "Available Cars"}</h1>
+      
+      {/* HEADER */}
+      <h1>
+        {location ? `Cars in ${location}` : "Available Cars"}
+      </h1>
 
+      {/* GRID */}
       <div className="cars-grid">
-        {loading
-          ? Array.from({ length: 6 }).map((_, i) => (
-              <SkeletonCard key={i} />
-            ))
-          : filteredCars.map((car) => (
-              <CarCard
-                key={car._id}
-                {...car}
-                available={isCarAvailable(car)}
-              />
-            ))}
+        {loading ? (
+          Array.from({ length: 6 }).map((_, i) => (
+            <SkeletonCard key={i} />
+          ))
+        ) : filteredCars.length === 0 ? (
+          <h3>No cars found</h3>
+        ) : (
+          filteredCars.map((car) => (
+            <CarCard
+              key={car._id}
+              {...car}
+              available={isCarAvailable(car)}
+            />
+          ))
+        )}
       </div>
+
     </div>
   );
 }
