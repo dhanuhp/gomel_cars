@@ -18,7 +18,12 @@ if (!process.env.MONGO_URI) {
 }
 
 const PORT = process.env.PORT || 5000;
-const client = new MongoClient(process.env.MONGO_URI);
+
+// ✅ FIX: Mongo options added
+const client = new MongoClient(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 async function startServer() {
   try {
@@ -28,9 +33,9 @@ async function startServer() {
     const db = client.db("gomelDB");
     const carsCollection = db.collection("cars");
 
-    // 🌐 HOME
+    // 🌐 HOME (IMPORTANT FIX YOU NEEDED)
     app.get("/", (req, res) => {
-      res.send("🚀 Server running");
+      res.send("🚀 Server is running perfectly");
     });
 
     // 🧪 TEST
@@ -55,7 +60,7 @@ async function startServer() {
           price,
           type: type || "Unknown",
           location: location || "Unknown",
-          bookedDates: [], // 🔥 important
+          bookedDates: [],
           createdAt: new Date(),
         };
 
@@ -67,6 +72,7 @@ async function startServer() {
         });
 
       } catch (err) {
+        console.error(err);
         res.status(500).json({ error: "Failed to add car" });
       }
     });
@@ -82,6 +88,7 @@ async function startServer() {
         });
 
       } catch (err) {
+        console.error(err);
         res.status(500).json({ error: "Fetch failed" });
       }
     });
@@ -106,15 +113,20 @@ async function startServer() {
         res.json({ success: true, data: car });
 
       } catch (err) {
+        console.error(err);
         res.status(500).json({ error: "Fetch failed" });
       }
     });
 
-    // 🔥 BOOK CAR (MAIN FEATURE)
+    // 🔥 BOOK CAR
     app.post("/book-car/:id", async (req, res) => {
       try {
         const { id } = req.params;
         const { pickupDate, returnDate } = req.body;
+
+        if (!ObjectId.isValid(id)) {
+          return res.status(400).json({ error: "Invalid ID" });
+        }
 
         if (!pickupDate || !returnDate) {
           return res.status(400).json({ error: "Dates required" });
@@ -137,7 +149,6 @@ async function startServer() {
 
         const bookedDates = car.bookedDates || [];
 
-        // 🔥 CHECK CONFLICT
         const conflict = bookedDates.some((date) => {
           const d = new Date(date);
           return d >= start && d <= end;
@@ -149,7 +160,6 @@ async function startServer() {
           });
         }
 
-        // 🔥 CREATE DATE RANGE
         const newDates = [];
         let current = new Date(start);
 
@@ -158,7 +168,6 @@ async function startServer() {
           current.setDate(current.getDate() + 1);
         }
 
-        // 🔥 UPDATE DB
         await carsCollection.updateOne(
           { _id: new ObjectId(id) },
           {
@@ -182,13 +191,20 @@ async function startServer() {
     // ❌ DELETE
     app.delete("/car/:id", async (req, res) => {
       try {
-        const result = await carsCollection.deleteOne({
-          _id: new ObjectId(req.params.id),
+        const { id } = req.params;
+
+        if (!ObjectId.isValid(id)) {
+          return res.status(400).json({ error: "Invalid ID" });
+        }
+
+        await carsCollection.deleteOne({
+          _id: new ObjectId(id),
         });
 
         res.json({ success: true });
 
-      } catch {
+      } catch (err) {
+        console.error(err);
         res.status(500).json({ error: "Delete failed" });
       }
     });
@@ -196,25 +212,32 @@ async function startServer() {
     // ✏️ UPDATE
     app.put("/car/:id", async (req, res) => {
       try {
+        const { id } = req.params;
+
+        if (!ObjectId.isValid(id)) {
+          return res.status(400).json({ error: "Invalid ID" });
+        }
+
         await carsCollection.updateOne(
-          { _id: new ObjectId(req.params.id) },
+          { _id: new ObjectId(id) },
           { $set: req.body }
         );
 
         res.json({ success: true });
 
-      } catch {
+      } catch (err) {
+        console.error(err);
         res.status(500).json({ error: "Update failed" });
       }
     });
 
-    // 🚀 START
+    // 🚀 START SERVER
     app.listen(PORT, () => {
-      console.log(`🚀 Running on http://localhost:${PORT}`);
+      console.log(`🚀 Server running on port ${PORT}`);
     });
 
   } catch (err) {
-    console.error(err);
+    console.error("❌ Server failed:", err);
     process.exit(1);
   }
 }
