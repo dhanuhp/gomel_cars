@@ -19,11 +19,8 @@ if (!process.env.MONGO_URI) {
 
 const PORT = process.env.PORT || 5000;
 
-// ✅ FIX: Mongo options added
-const client = new MongoClient(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+// ✅ Mongo Client (clean version)
+const client = new MongoClient(process.env.MONGO_URI);
 
 async function startServer() {
   try {
@@ -33,7 +30,7 @@ async function startServer() {
     const db = client.db("gomelDB");
     const carsCollection = db.collection("cars");
 
-    // 🌐 HOME (IMPORTANT FIX YOU NEEDED)
+    // 🌐 HOME
     app.get("/", (req, res) => {
       res.send("🚀 Server is running perfectly");
     });
@@ -66,14 +63,17 @@ async function startServer() {
 
         const result = await carsCollection.insertOne(newCar);
 
-        res.status(201).json({
+        return res.status(201).json({
           success: true,
           data: result.insertedId,
         });
 
       } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Failed to add car" });
+        return res.status(500).json({
+          success: false,
+          error: "Failed to add car",
+        });
       }
     });
 
@@ -82,14 +82,17 @@ async function startServer() {
       try {
         const cars = await carsCollection.find().toArray();
 
-        res.json({
+        return res.json({
           success: true,
           data: cars,
         });
 
       } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Fetch failed" });
+        return res.status(500).json({
+          success: false,
+          error: "Fetch failed",
+        });
       }
     });
 
@@ -99,7 +102,10 @@ async function startServer() {
         const { id } = req.params;
 
         if (!ObjectId.isValid(id)) {
-          return res.status(400).json({ error: "Invalid ID" });
+          return res.status(400).json({
+            success: false,
+            error: "Invalid ID",
+          });
         }
 
         const car = await carsCollection.findOne({
@@ -107,14 +113,23 @@ async function startServer() {
         });
 
         if (!car) {
-          return res.status(404).json({ error: "Not found" });
+          return res.status(404).json({
+            success: false,
+            error: "Car not found",
+          });
         }
 
-        res.json({ success: true, data: car });
+        return res.json({
+          success: true,
+          data: car,
+        });
 
       } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Fetch failed" });
+        return res.status(500).json({
+          success: false,
+          error: "Fetch failed",
+        });
       }
     });
 
@@ -125,18 +140,27 @@ async function startServer() {
         const { pickupDate, returnDate } = req.body;
 
         if (!ObjectId.isValid(id)) {
-          return res.status(400).json({ error: "Invalid ID" });
+          return res.status(400).json({
+            success: false,
+            error: "Invalid ID",
+          });
         }
 
         if (!pickupDate || !returnDate) {
-          return res.status(400).json({ error: "Dates required" });
+          return res.status(400).json({
+            success: false,
+            error: "Dates required",
+          });
         }
 
         const start = new Date(pickupDate);
         const end = new Date(returnDate);
 
         if (end <= start) {
-          return res.status(400).json({ error: "Invalid dates" });
+          return res.status(400).json({
+            success: false,
+            error: "Invalid date range",
+          });
         }
 
         const car = await carsCollection.findOne({
@@ -144,11 +168,15 @@ async function startServer() {
         });
 
         if (!car) {
-          return res.status(404).json({ error: "Car not found" });
+          return res.status(404).json({
+            success: false,
+            error: "Car not found",
+          });
         }
 
         const bookedDates = car.bookedDates || [];
 
+        // 🔥 conflict check
         const conflict = bookedDates.some((date) => {
           const d = new Date(date);
           return d >= start && d <= end;
@@ -156,10 +184,12 @@ async function startServer() {
 
         if (conflict) {
           return res.status(400).json({
+            success: false,
             error: "Car already booked for selected dates",
           });
         }
 
+        // 🔥 generate dates
         const newDates = [];
         let current = new Date(start);
 
@@ -177,14 +207,17 @@ async function startServer() {
           }
         );
 
-        res.json({
+        return res.json({
           success: true,
           message: "Booking successful 🚀",
         });
 
       } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Booking failed" });
+        return res.status(500).json({
+          success: false,
+          error: "Booking failed",
+        });
       }
     });
 
@@ -194,18 +227,24 @@ async function startServer() {
         const { id } = req.params;
 
         if (!ObjectId.isValid(id)) {
-          return res.status(400).json({ error: "Invalid ID" });
+          return res.status(400).json({
+            success: false,
+            error: "Invalid ID",
+          });
         }
 
         await carsCollection.deleteOne({
           _id: new ObjectId(id),
         });
 
-        res.json({ success: true });
+        return res.json({ success: true });
 
       } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Delete failed" });
+        return res.status(500).json({
+          success: false,
+          error: "Delete failed",
+        });
       }
     });
 
@@ -215,7 +254,10 @@ async function startServer() {
         const { id } = req.params;
 
         if (!ObjectId.isValid(id)) {
-          return res.status(400).json({ error: "Invalid ID" });
+          return res.status(400).json({
+            success: false,
+            error: "Invalid ID",
+          });
         }
 
         await carsCollection.updateOne(
@@ -223,11 +265,14 @@ async function startServer() {
           { $set: req.body }
         );
 
-        res.json({ success: true });
+        return res.json({ success: true });
 
       } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Update failed" });
+        return res.status(500).json({
+          success: false,
+          error: "Update failed",
+        });
       }
     });
 
