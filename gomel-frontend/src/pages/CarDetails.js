@@ -13,26 +13,25 @@ function CarDetails() {
   const [totalDays, setTotalDays] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  // 🔥 FETCH CAR
+  // 🔥 FETCH CAR (FIXED)
   useEffect(() => {
-    fetch(`http://localhost:5000/car/${id}`)
+    fetch(`https://gomel-cars.onrender.com/car/${id}`)
       .then((res) => res.json())
       .then((data) => {
-        setCar(data.data);
+        setCar(data.data || null); // ✅ safe fallback
         setLoading(false);
       })
       .catch((err) => {
-        console.error(err);
+        console.error("Fetch error:", err);
         setLoading(false);
       });
   }, [id]);
 
-  // 🔥 FORMAT DATE (IMPORTANT)
+  // 🔥 FORMAT DATE
   const formatDate = (date) => {
     return new Date(date).toISOString().split("T")[0];
   };
 
-  // 🔥 BOOKED DATES (STRING FORMAT)
   const bookedDates = (car?.bookedDates || []).map(formatDate);
 
   // 🔥 PRICE CALCULATION
@@ -60,7 +59,7 @@ function CarDetails() {
     setTotalPrice(days * car.price);
   }, [pickupDate, returnDate, car]);
 
-  // 🔥 BOOKING FUNCTION
+  // 🔥 BOOKING FUNCTION (FIXED URL)
   const handleBooking = async () => {
     if (!pickupDate || !returnDate) {
       alert("Please select dates");
@@ -72,10 +71,9 @@ function CarDetails() {
       return;
     }
 
-    // 🔥 FRONTEND CONFLICT CHECK
-    const conflict = bookedDates.some((date) => {
-      return date >= pickupDate && date <= returnDate;
-    });
+    const conflict = bookedDates.some(
+      (date) => date >= pickupDate && date <= returnDate
+    );
 
     if (conflict) {
       alert("Some selected dates are already booked ❌");
@@ -84,7 +82,7 @@ function CarDetails() {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/book-car/${id}`,
+        `https://gomel-cars.onrender.com/book-car/${id}`,
         {
           method: "POST",
           headers: {
@@ -100,21 +98,22 @@ function CarDetails() {
       const data = await res.json();
 
       if (!res.ok) {
-        alert(data.error);
+        alert(data.error || "Booking failed");
         return;
       }
 
       navigate(
-        `/booking-success/${encodeURIComponent(car.name)}?pickup=${pickupDate}&return=${returnDate}`
+        `/booking-success/${encodeURIComponent(
+          car.name
+        )}?pickup=${pickupDate}&return=${returnDate}`
       );
-
     } catch (error) {
       console.error(error);
       alert("Booking failed");
     }
   };
 
-  // 🔥 LOADING
+  // 🔥 LOADING STATES
   if (loading) {
     return <h2 style={{ textAlign: "center" }}>Loading...</h2>;
   }
@@ -123,7 +122,6 @@ function CarDetails() {
     return <h2 style={{ textAlign: "center" }}>Car not found</h2>;
   }
 
-  // 🔥 TODAY DATE
   const today = new Date().toISOString().split("T")[0];
 
   return (
@@ -131,7 +129,7 @@ function CarDetails() {
       style={{
         padding: "80px 20px",
         maxWidth: "900px",
-        margin: "auto"
+        margin: "auto",
       }}
     >
       <h1 style={{ textAlign: "center", marginBottom: "30px" }}>
@@ -147,7 +145,7 @@ function CarDetails() {
         style={{
           width: "100%",
           borderRadius: "10px",
-          marginBottom: "30px"
+          marginBottom: "30px",
         }}
       />
 
@@ -163,19 +161,16 @@ function CarDetails() {
 
       {/* DATE INPUT */}
       <div style={{ display: "flex", gap: "15px", flexWrap: "wrap" }}>
-        
         <input
           type="date"
           min={today}
           value={pickupDate}
           onChange={(e) => {
             const selected = e.target.value;
-
             if (bookedDates.includes(selected)) {
               alert("This date is already booked ❌");
               return;
             }
-
             setPickupDate(selected);
           }}
         />
@@ -186,12 +181,10 @@ function CarDetails() {
           value={returnDate}
           onChange={(e) => {
             const selected = e.target.value;
-
             if (bookedDates.includes(selected)) {
               alert("This date is already booked ❌");
               return;
             }
-
             setReturnDate(selected);
           }}
         />
