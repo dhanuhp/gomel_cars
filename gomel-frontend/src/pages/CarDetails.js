@@ -13,24 +13,31 @@ function CarDetails() {
   const [totalDays, setTotalDays] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  // 🔥 FETCH CAR (FIXED)
+  // 🔥 FETCH CAR
   useEffect(() => {
-    fetch(`https://gomel-cars.onrender.com/car/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setCar(data.data || null); // ✅ safe fallback
-        setLoading(false);
-      })
-      .catch((err) => {
+    const fetchCar = async () => {
+      try {
+        const res = await fetch(
+          `https://gomel-cars.onrender.com/car/${id}`
+        );
+
+        if (!res.ok) throw new Error("Failed to fetch car");
+
+        const data = await res.json();
+        setCar(data.data || null);
+      } catch (err) {
         console.error("Fetch error:", err);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchCar();
   }, [id]);
 
   // 🔥 FORMAT DATE
-  const formatDate = (date) => {
-    return new Date(date).toISOString().split("T")[0];
-  };
+  const formatDate = (date) =>
+    new Date(date).toISOString().split("T")[0];
 
   const bookedDates = (car?.bookedDates || []).map(formatDate);
 
@@ -45,21 +52,21 @@ function CarDetails() {
     const start = new Date(pickupDate);
     const end = new Date(returnDate);
 
-    const diff = end - start;
-
-    if (diff <= 0) {
+    if (end <= start) {
       setTotalDays(0);
       setTotalPrice(0);
       return;
     }
 
-    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    const days = Math.ceil(
+      (end - start) / (1000 * 60 * 60 * 24)
+    );
 
     setTotalDays(days);
     setTotalPrice(days * car.price);
   }, [pickupDate, returnDate, car]);
 
-  // 🔥 BOOKING FUNCTION (FIXED URL)
+  // 🔥 BOOKING
   const handleBooking = async () => {
     if (!pickupDate || !returnDate) {
       alert("Please select dates");
@@ -76,7 +83,7 @@ function CarDetails() {
     );
 
     if (conflict) {
-      alert("Some selected dates are already booked ❌");
+      alert("Selected dates already booked ❌");
       return;
     }
 
@@ -113,7 +120,6 @@ function CarDetails() {
     }
   };
 
-  // 🔥 LOADING STATES
   if (loading) {
     return <h2 style={{ textAlign: "center" }}>Loading...</h2>;
   }
@@ -125,16 +131,8 @@ function CarDetails() {
   const today = new Date().toISOString().split("T")[0];
 
   return (
-    <div
-      style={{
-        padding: "80px 20px",
-        maxWidth: "900px",
-        margin: "auto",
-      }}
-    >
-      <h1 style={{ textAlign: "center", marginBottom: "30px" }}>
-        {car.name}
-      </h1>
+    <div style={{ padding: "80px 20px", maxWidth: "900px", margin: "auto" }}>
+      <h1 style={{ textAlign: "center" }}>{car.name}</h1>
 
       <img
         src={
@@ -142,11 +140,7 @@ function CarDetails() {
           "https://images.pexels.com/photos/358070/pexels-photo-358070.jpeg"
         }
         alt={car.name}
-        style={{
-          width: "100%",
-          borderRadius: "10px",
-          marginBottom: "30px",
-        }}
+        style={{ width: "100%", borderRadius: "10px", marginBottom: "20px" }}
       />
 
       <p>📍 Location: {car.location || "N/A"}</p>
@@ -155,23 +149,22 @@ function CarDetails() {
       <p>⛽ Fuel: {car.fuel || "N/A"}</p>
       <p>⚙ Transmission: {car.transmission || "N/A"}</p>
 
-      <p style={{ marginBottom: "25px" }}>
+      <p style={{ marginBottom: "20px" }}>
         💰 Price: ₹{car.price} / day
       </p>
 
-      {/* DATE INPUT */}
-      <div style={{ display: "flex", gap: "15px", flexWrap: "wrap" }}>
+      <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
         <input
           type="date"
           min={today}
           value={pickupDate}
           onChange={(e) => {
-            const selected = e.target.value;
-            if (bookedDates.includes(selected)) {
-              alert("This date is already booked ❌");
+            const val = e.target.value;
+            if (bookedDates.includes(val)) {
+              alert("Date already booked ❌");
               return;
             }
-            setPickupDate(selected);
+            setPickupDate(val);
           }}
         />
 
@@ -180,27 +173,25 @@ function CarDetails() {
           min={pickupDate || today}
           value={returnDate}
           onChange={(e) => {
-            const selected = e.target.value;
-            if (bookedDates.includes(selected)) {
-              alert("This date is already booked ❌");
+            const val = e.target.value;
+            if (bookedDates.includes(val)) {
+              alert("Date already booked ❌");
               return;
             }
-            setReturnDate(selected);
+            setReturnDate(val);
           }}
         />
 
         <button onClick={handleBooking} disabled={totalDays <= 0}>
-          Book This Car 🚀
+          Book 🚀
         </button>
       </div>
 
-      {/* SUMMARY */}
       {totalDays > 0 && (
-        <div style={{ marginTop: "30px" }}>
+        <div style={{ marginTop: "20px" }}>
           <h3>Trip Summary</h3>
-          <p>Total Days: {totalDays}</p>
-          <p>₹{car.price} × {totalDays}</p>
-          <h2>Total Price: ₹{totalPrice}</h2>
+          <p>{totalDays} days</p>
+          <h2>Total: ₹{totalPrice}</h2>
         </div>
       )}
     </div>

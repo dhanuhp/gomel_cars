@@ -16,22 +16,28 @@ function Cars() {
   const [filter, setFilter] = useState("All");
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("default");
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(10000000);
+  const [minPrice] = useState(0);
+  const [maxPrice] = useState(10000000);
   const [loading, setLoading] = useState(true);
 
-  // 🔥 FETCH FROM LIVE BACKEND (FIXED)
+  // 🔥 FETCH DATA
   useEffect(() => {
-    fetch("https://gomel-cars.onrender.com/cars")
-      .then((res) => res.json())
-      .then((data) => {
-        setCars(data.data || []); // ✅ safe fallback
-        setLoading(false);
-      })
-      .catch((err) => {
+    const fetchCars = async () => {
+      try {
+        const res = await fetch("https://gomel-cars.onrender.com/cars");
+
+        if (!res.ok) throw new Error("Failed to fetch cars");
+
+        const data = await res.json();
+        setCars(data.data || []);
+      } catch (err) {
         console.error("Fetch error:", err);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchCars();
   }, []);
 
   // ✅ Availability Check
@@ -61,30 +67,25 @@ function Cars() {
   // ✅ Sorting
   if (sortBy === "priceLow") {
     filteredCars.sort((a, b) => a.price - b.price);
-  }
-  if (sortBy === "priceHigh") {
+  } else if (sortBy === "priceHigh") {
     filteredCars.sort((a, b) => b.price - a.price);
-  }
-  if (sortBy === "rating") {
+  } else if (sortBy === "rating") {
     filteredCars.sort((a, b) => (b.rating || 0) - (a.rating || 0));
   }
 
   return (
     <div className="cars-page">
-      
-      {/* HEADER */}
       <h1>
         {location ? `Cars in ${location}` : "Available Cars"}
       </h1>
 
-      {/* GRID */}
       <div className="cars-grid">
         {loading ? (
           Array.from({ length: 6 }).map((_, i) => (
             <SkeletonCard key={i} />
           ))
         ) : filteredCars.length === 0 ? (
-          <h3>No cars found</h3>
+          <h3 style={{ textAlign: "center" }}>No cars found</h3>
         ) : (
           filteredCars.map((car) => (
             <CarCard
@@ -95,7 +96,6 @@ function Cars() {
           ))
         )}
       </div>
-
     </div>
   );
 }
